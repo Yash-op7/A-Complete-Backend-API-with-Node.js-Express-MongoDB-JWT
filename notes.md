@@ -1,8 +1,11 @@
 # mistakes made:
 ### - it is `module.exports`
-app.use(express.urlencoded({extended: true}));
-- 
-
+- app.use(express.urlencoded({extended: true}));
+-
+```js
+const postSchema = mongoose.Schema({ userId: {
+        type:mongoose.Schema.Types.ObjectId,
+```
 # 2 hour yt complete backend project
 
 ### - npm init -y
