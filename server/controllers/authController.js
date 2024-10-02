@@ -1,6 +1,8 @@
 const { signupSchema } = require("../middlewares/validator");
 
-const { doHash, doCompare } = require("../utils/hashing");
+const jwt = require('jsonwebtoken');
+
+const { doHash, doHashValidation } = require("../utils/hashing");
 
 const User = require("../models/userModel");
 
@@ -60,7 +62,7 @@ exports.signin = async function (req, res) {
       .json({ success: false, message: "invalid input format." });
   }
 
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
     return res.status(401).json({
@@ -70,19 +72,28 @@ exports.signin = async function (req, res) {
   }
 
   try {
-    const isValid = await doCompare(password, user.password);
+    const isValid = await doHashValidation(password, user.password);
 
-    if (isValid) {
-        return res.status('200').json({
-            "success":true,
-            message:'you are now logged in'
-        })
-    } else {
-        return res.status(401).json({
-            success:false,
-            message:"incorrect password for the given user"
-        });
+    if (!isValid) {
+      return res.status(401).json({
+        success: false,
+        message: "incorrect password for the given user",
+      });
     }
+
+    // jwt
+    const user_object = {
+        userId: user._id,
+        email: user.email,
+        verified: user.verified
+    }
+    const token = jwt.sign(user_object, secret)
+
+
+    return res.status("200").json({
+      success: true,
+      message: "you are now logged in",
+    });
   } catch (error) {
     console.log(error);
   }
