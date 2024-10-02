@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 exports.signupSchema = Joi.object({
-    email: Joi.email()
+    email: Joi.string().email()
     .required()
     .messages({
         "string.email":"invalid email",

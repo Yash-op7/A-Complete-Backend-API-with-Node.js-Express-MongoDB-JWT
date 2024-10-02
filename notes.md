@@ -1,7 +1,7 @@
 # mistakes made:
 ### - it is `module.exports`
 - app.use(express.urlencoded({extended: true}));
--
+- forgot to await in bcrypt.compare(inputPassword, hashedPassword);
 ```js
 const postSchema = mongoose.Schema({ userId: {
         type:mongoose.Schema.Types.ObjectId,
@@ -70,3 +70,7 @@ mongoose.connect(process.env.Mongo_uri).then(() => console.log('connected.')).ca
 redirect to
 ## auth controller
 - in the signup before storing the user details in the db we should validte them so create a middleware called validator.js
+
+- inside signin, when we fetch the user document using `User.findOne({email}).select('+password');` we should note that:
+    - {email} is shorthand for {email:email}
+    - '+password' is used to select fields which are by default set select:false in the user model.
