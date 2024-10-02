@@ -63,3 +63,10 @@ mongoose.connect(process.env.Mongo_uri).then(() => console.log('connected.')).ca
 
 ## models
 ### > userModel.js 
+### > postModel.js 
+- this has a userId reference key in the schema
+
+## auth router
+redirect to
+## auth controller
+- in the signup before storing the user details in the db we should validte them so create a middleware called validator.js

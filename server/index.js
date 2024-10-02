@@ -21,7 +21,9 @@ db = mongoose.connection;
 db.once('open', () => console.log("DB connected"));
 db.on('error', (err) => console.error("DB connection failed", err));
 
+const authRouter = require('./routers/authRouter.js');
 
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
     res.json({message: 'welcome to the api'})

@@ -2,3 +2,8 @@
 ::1 - - [02/Oct/2024:20:51:50 +0000] "GET /users HTTP/1.1" 201 19 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 ::1 - - [02/Oct/2024:20:51:51 +0000] "GET /users HTTP/1.1" 201 19 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 ::1 - - [02/Oct/2024:20:51:54 +0000] "GET / HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+::1 - - [02/Oct/2024:21:18:10 +0000] "POST /signup?username=yash HTTP/1.1" 404 146 "-" "PostmanRuntime/7.39.1"
+::1 - - [02/Oct/2024:21:19:20 +0000] "POST /auth/signup?username=yash HTTP/1.1" 200 25 "-" "PostmanRuntime/7.39.1"
+::1 - - [02/Oct/2024:21:19:20 +0000] "POST /auth/signup?username=yash HTTP/1.1" 200 25 "-" "PostmanRuntime/7.39.1"
+::1 - - [02/Oct/2024:21:22:56 +0000] "POST /auth/signup?username=yash HTTP/1.1" 200 17 "-" "PostmanRuntime/7.39.1"
+::1 - - [02/Oct/2024:21:22:56 +0000] "POST /auth/signup?username=yash HTTP/1.1" 200 17 "-" "PostmanRuntime/7.39.1"
