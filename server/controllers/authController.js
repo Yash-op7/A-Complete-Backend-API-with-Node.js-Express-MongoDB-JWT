@@ -1,6 +1,6 @@
 const { signupSchema } = require("../middlewares/validator");
 
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const { doHash, doHashValidation } = require("../utils/hashing");
 
@@ -59,7 +59,7 @@ exports.signin = async function (req, res) {
   } catch (error) {
     return res
       .status(401)
-      .json({ success: false, message: "invalid input format." });
+      .json({ success: false, message: "❌ invalid input format." });
   }
 
   const user = await User.findOne({ email }).select("+password");
@@ -67,7 +67,7 @@ exports.signin = async function (req, res) {
   if (!user) {
     return res.status(401).json({
       success: false,
-      message: "user doesn't exist.",
+      message: "❌ user doesn't exist.",
     });
   }
 
@@ -77,24 +77,42 @@ exports.signin = async function (req, res) {
     if (!isValid) {
       return res.status(401).json({
         success: false,
-        message: "incorrect password for the given user",
+        message: "❌ incorrect password for the given user",
       });
     }
 
     // jwt
     const user_object = {
-        userId: user._id,
-        email: user.email,
-        verified: user.verified
-    }
-    const token = jwt.sign(user_object, secret)
-
-
-    return res.status("200").json({
-      success: true,
-      message: "you are now logged in",
+      userId: user._id,
+      email: user.email,
+      verified: user.verified,
+    };
+    const token = jwt.sign(user_object, process.env.TOKEN_SECRET, {
+      expiresIn: "8h",
     });
+
+    return res
+      .cookie("Authorization", "Bearer " + token, {
+        expires: new Date(Date.now() + 8 * 3600000),
+        httpOnly: process.env.NODE_ENV === "production",
+        secure: process.env.NODE_ENV === "production",
+      })
+      .status(200)
+      .json({
+        success: true,
+        token,
+        message: "✅ logged in sucessfully",
+      });
   } catch (error) {
     console.log(error);
   }
+};
+exports.signout = async function (req, res) {
+  // the client will send a blank req for signout
+  // just clear the cookie
+
+  res.clearCookie("Authorization").status(200).json({
+    success: true,
+    message: "✅ Successfully signed out.",
+  });
 };

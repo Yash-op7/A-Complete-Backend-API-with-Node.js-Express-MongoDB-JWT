@@ -2,6 +2,7 @@
 ### - it is `module.exports`
 - app.use(express.urlencoded({extended: true}));
 - forgot to await in bcrypt.compare(inputPassword, hashedPassword);
+- whilst testing signout route, forgot that it was a post request not the default get.
 ```js
 const postSchema = mongoose.Schema({ userId: {
         type:mongoose.Schema.Types.ObjectId,
@@ -74,3 +75,6 @@ redirect to
 - inside signin, when we fetch the user document using `User.findOne({email}).select('+password');` we should note that:
     - {email} is shorthand for {email:email}
     - '+password' is used to select fields which are by default set select:false in the user model.
+
+- note that in the jwtChecker middle ware we dont use res.send() or res.json() at the end since we call next, if there is an error, we simply throw it and catch and log it.
+- `jwt.verify(jwtToken, secret)` returns the payload that was encoded.
